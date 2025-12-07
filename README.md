@@ -3,8 +3,6 @@
 
 
 
-
-# Smart-Chrome-Video-Downloader-Trimmer
 A powerful Manifest V3 Chrome extension that finds every playable video on a page (even hidden or fragmented streams), lets you trim it with frame-accurate precision using FFmpeg stream copy, and downloads it via yt-dlp using Chrome Native Messaging
 
 Works on **most sites** — YouTube, Twitter/X, TikTok, Instagram, Reddit, Twitch, etc. I notice that it has trouble downloading from Vimeo, but I couldn't be bothered fixing. 
