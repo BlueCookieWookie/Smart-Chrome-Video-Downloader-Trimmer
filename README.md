@@ -22,7 +22,7 @@ Works on **most sites** — YouTube, Twitter/X, TikTok, Instagram, Reddit, Twitc
 
 Done.
 
-Chrome Native Messaging requires absolute paths to the Python executable, host script, and FFmpeg binary — these differ on every machine, so the installer detects/installs Python + yt-dlp, downloads FFmpeg, and writes the correct paths automatically.
+Chrome Native Messaging requires absolute paths to the Python executable, host script, and FFmpeg binary — these differ on every machine, so the installer detects/installs Python + yt-dlp, downloads FFmpeg, and writes the correct paths and necessary config files automatically.
 
 After installation, the downloaded directory is no longer needed and can be deleted. The extension will now live in C:\Users\<YourName>\SmartVideoDownloader
 
