@@ -60,21 +60,6 @@ def read_message() -> Optional[dict]:
         log(f"Error decoding message: {e!r}")
         return None
 
-# ---------------- Cookies from browser (optional) ---------------- #
-
-def _is_cookie_db_permission_error(err: DownloadError) -> bool:
-    text = str(err)
-    return "Could not copy Chrome cookie database" in text or "Permission denied" in text
-
-def build_cookies_opt(url: str) -> Optional[Tuple[str]]:
-    try:
-        u = url.lower()
-    except Exception:
-        return None
-    if "http://" in u or "https://" in u:
-        return ("chrome",)
-    return None
-
 # ---------------- yt-dlp helpers ---------------- #
 
 class NullLogger:
@@ -212,11 +197,6 @@ def run_ytdlp_download(
                 # video + audio
                 ydl_opts["format"] = quality_to_format(quality, container)
 
-    cookies_opt = build_cookies_opt(url)
-    if cookies_opt:
-        ydl_opts["cookiesfrombrowser"] = cookies_opt
-        log(f"Using cookies-from-browser={cookies_opt} for URL: {url}")
-
     log(
         f"Starting yt-dlp download for URL: {url}, "
         f"quality={quality}, container={container}, format_id={format_id}, "
@@ -230,13 +210,8 @@ def run_ytdlp_download(
         with YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=True)
     except DownloadError as e:
-        if _is_cookie_db_permission_error(e) and "cookiesfrombrowser" in ydl_opts:
-            log("Cookie DB permission error; retrying yt-dlp without cookiesfrombrowser.")
-            ydl_opts.pop("cookiesfrombrowser", None)
-            with YoutubeDL(ydl_opts) as ydl2:
-                info = ydl2.extract_info(url, download=True)
-        else:
-            raise
+        log(f"yt-dlp DownloadError: {e!r}")
+        raise
 
     filename = None
     if isinstance(info, dict):
@@ -329,11 +304,6 @@ def run_ytdlp_probe(url: str) -> Tuple[Optional[float], Optional[str], Optional[
         "logger": NULL_LOGGER,
     }
 
-    cookies_opt = build_cookies_opt(url)
-    if cookies_opt:
-        ydl_opts["cookiesfrombrowser"] = cookies_opt
-        log(f"Using cookies-from-browser={cookies_opt} for PROBE URL: {url}")
-
     duration = None
     title = None
     thumbs = []
@@ -343,13 +313,8 @@ def run_ytdlp_probe(url: str) -> Tuple[Optional[float], Optional[str], Optional[
         with YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
     except DownloadError as e:
-        if _is_cookie_db_permission_error(e) and "cookiesfrombrowser" in ydl_opts:
-            log("Cookie DB permission error in probe; retrying without cookies.")
-            ydl_opts.pop("cookiesfrombrowser", None)
-            with YoutubeDL(ydl_opts) as ydl2:
-                info = ydl2.extract_info(url, download=False)
-        else:
-            raise
+        log(f"yt-dlp probe DownloadError: {e!r}")
+        raise
 
     if isinstance(info, dict):
         duration = info.get("duration")
