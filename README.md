@@ -11,7 +11,7 @@ Works on **most sites** — YouTube, Twitter/X, TikTok, Instagram, Reddit, Twitc
 
 ### Installation (Windows)
 
-1. Download the latest release
+1. Download the latest release or clone the repo
 2. Extract and double-click `Install.bat`  
    → installs to `C:\Users\<YourName>\SmartVideoDownloader`
 3. Open `chrome://extensions/` → enable **Developer mode**
