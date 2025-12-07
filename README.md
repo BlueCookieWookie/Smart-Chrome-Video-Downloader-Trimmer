@@ -34,5 +34,3 @@ After installation, the downloaded directory is no longer need and can be delete
 - Pick a video
 - (Optional) Enable trimming → drag sliders
 - Choose quality/format → download
-
-I notice that it has trouble downloading from Vimeo, couldn't be bothered fixing. 
