@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Video Trimmer &amp; Downloader</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="popup-root">
+    <!-- Header / hero -->
+    <header class="header-card">
+      <button id="pin-toggle" type="button" class="pin-btn" title="Open pinned window">
+        📌
+      </button>
+      <div class="header-title-row header-title-center">
+        <img src="icons/128.png" alt="" class="header-icon" />
+        <div class="header-title">Smart Video Trimmer &amp; Downloader</div>
+      </div>
+      <div class="header-subtitle header-subtitle-center">
+        Pick a video, optionally trim, then download via the native helper.
+      </div>
+    </header>
+
+    <!-- Status summary card -->
+    <section class="status-card">
+      <div class="status-pill status-pill-ok"></div>
+      <div class="status-text">
+        Ready. Enable trimming if you want a clip, or download the full video.
+      </div>
+    </section>
+
+    <!-- Video list -->
+    <section class="card">
+      <div class="card-header-row">
+        <div class="card-title">Found videos</div>
+        <div id="video-count" class="card-meta">Scanning…</div>
+      </div>
+      <div id="video-list" class="video-list">
+        <!-- Filled by popup.js -->
+      </div>
+    </section>
+
+    <!-- Selected video / controls -->
+    <section id="trim-section" class="card hidden">
+      <div class="card-header-row card-header-center">
+        <div id="selected-title" class="card-title">
+          Selected video
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-shell">
+        <video
+          id="preview-video"
+          class="preview-video hidden"
+          controls
+          preload="metadata"
+        ></video>
+        <img
+          id="preview-thumb"
+          class="preview-thumb"
+          alt="Video thumbnail"
+        />
+      </div>
+
+      <!-- Trim toggle + sliders -->
+      <div class="field-row field-row-inline field-row-center">
+        <label class="field-label-inline" for="enable-trim">
+          <span class="toggle-shell">
+            <input type="checkbox" id="enable-trim" />
+            <span class="toggle-slider"></span>
+          </span>
+          <span class="toggle-label">Enable trimming</span>
+        </label>
+      </div>
+
+      <div id="slider-wrapper" class="slider-wrapper hidden">
+        <div class="slider-row">
+          <div class="slider-label-group">
+            <span class="slider-label">Start</span>
+            <span id="start-time-label" class="slider-time">0:00</span>
+          </div>
+          <input
+            id="start-range"
+            type="range"
+            min="0"
+            max="60"
+            step="0.1"
+            value="0"
+            class="slider-input"
+          />
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-label-group">
+            <span class="slider-label">End</span>
+            <span id="end-time-label" class="slider-time">0:00</span>
+          </div>
+          <input
+            id="end-range"
+            type="range"
+            min="0"
+            max="60"
+            step="0.1"
+            value="60"
+            class="slider-input"
+          />
+        </div>
+
+        <div id="duration-help" class="duration-help">
+          Clip: 0:00 → 0:00 (0:00)
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Download type / quality / format -->
+      <div class="field-row field-row-center">
+        <label class="field-label" for="stream-type">Download type</label>
+        <select id="stream-type" class="field-select">
+          <option value="av">Video + audio</option>
+          <option value="v">Video only</option>
+          <option value="a">Audio only</option>
+        </select>
+      </div>
+
+      <div class="field-row field-row-center">
+        <label class="field-label" for="quality-select">Quality</label>
+        <select id="quality-select" class="field-select">
+          <!-- Filled by popup.js based on formats -->
+        </select>
+      </div>
+
+      <div class="field-row field-row-center">
+        <label class="field-label" for="format-select">Format</label>
+        <select id="format-select" class="field-select">
+          <option value="mp4">MP4</option>
+          <option value="webm">WebM</option>
+          <option value="auto">Auto</option>
+        </select>
+      </div>
+
+      <!-- Save location -->
+      <div class="field-row save-row field-row-center">
+        <div id="save-location-label" class="save-label">
+          Save location: Downloads
+        </div>
+        <button id="change-save" type="button" class="btn btn-ghost">
+          Change…
+        </button>
+      </div>
+
+      <!-- Actions -->
+      <div class="button-row button-row-center">
+        <button id="download-full" type="button" class="btn btn-secondary">
+          <span id="full-spinner" class="btn-spinner hidden"></span>
+          <span id="btn-full-text">Download Full Video</span>
+        </button>
+
+        <button id="download-trimmed" type="button" class="btn btn-primary">
+          <span id="trim-spinner" class="btn-spinner hidden"></span>
+          <span id="btn-trim-text">Download Trimmed Clip</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
