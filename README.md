@@ -15,7 +15,7 @@ Works on **most sites** — YouTube, Twitter/X, TikTok, Instagram, Reddit, Twitc
 2. Extract and double-click `Install.bat`  
    → installs to `C:\Users\<YourName>\SmartVideoDownloader`
 3. Open `chrome://extensions/` → enable **Developer mode**
-4. Load unpacked → select the `extension` folder inside the C:\Users\SmartVideoDownloader install directory
+4. Load unpacked → select the `extension` folder inside the C:\Users\<YourName>\SmartVideoDownloader install directory
 5. Copy your Extension ID (32 characters)
 6. Edit `host\com.ytdlp_bridge.json` → replace `YOUR_EXTENSION_ID_GOES_HERE` with the extension ID
 7. Save → reload extension
